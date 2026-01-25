@@ -33,6 +33,7 @@ export interface ServiceRequest {
   requestType: 'online' | 'call';
   selectedItem: string;
   blockchainTxHash?: string;
+  actualFiles?: File[];
 }
 
 export interface CallRequest {
