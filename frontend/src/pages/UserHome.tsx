@@ -53,26 +53,26 @@ export default function UserHome() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       {/* Hero Section */}
       <section className="relative overflow-hidden gradient-hero">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,hsl(var(--pastel-lavender)),transparent_50%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,hsl(var(--pastel-mint)),transparent_50%)]" />
-        
+
         <div className="container relative py-20 md:py-32">
           <div className="max-w-3xl mx-auto text-center">
             <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 px-4 py-1.5">
               <Sparkles className="h-3 w-3 mr-2" />
               Web3 Government Services
             </Badge>
-            
+
             <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
               All Government Services{' '}
               <span className="text-gradient">in One Place</span>
             </h1>
-            
+
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Access 100+ government services seamlessly with your Web3 wallet. 
+              Access 100+ government services seamlessly with your Web3 wallet.
               Secure, transparent, and hassle-free.
             </p>
 
@@ -209,14 +209,14 @@ export default function UserHome() {
       <footer className="py-8 border-t border-border/50">
         <div className="container">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-lg bg-gradient-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">P</span>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <div className="h-6 w-6">
+                <img src="/logo.png" alt="CivicChain" className="h-full w-full object-contain filter grayscale opacity-50" />
               </div>
-              <span className="font-semibold text-foreground">PastelGov</span>
+              <span className="font-semibold">CivicChain</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              © 2024 PastelGov. Powered by Web3.
+              © 2026 CivicChain. Powered by Blockchain.
             </p>
           </div>
         </div>

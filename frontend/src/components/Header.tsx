@@ -76,11 +76,11 @@ export default function Header() {
         <div className="container flex h-16 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-gradient-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">P</span>
+            <div className="h-10 w-10 flex items-center justify-center">
+              <img src="/logo.png" alt="CivicChain Logo" className="h-full w-full object-contain" />
             </div>
-            <span className="text-xl font-semibold text-foreground">
-              Pastel<span className="text-gradient">Gov</span>
+            <span className="text-xl font-bold tracking-tight text-foreground">
+              Civic<span className="text-primary">Chain</span>
             </span>
           </Link>
 
