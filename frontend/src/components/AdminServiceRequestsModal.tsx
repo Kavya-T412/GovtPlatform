@@ -94,8 +94,12 @@ export default function AdminServiceRequestsModal({ service, isOpen, onClose }: 
         setIsDetailOpen(true);
     };
 
-    const handleContactCall = (request: CallRequest) => {
-        updateCallRequestStatus(request.id, 'contacted');
+    const handleContactCall = async (request: CallRequest) => {
+        try {
+            await acceptRequest(request.id);
+        } catch (error) {
+            console.error('Failed to contact call:', error);
+        }
     };
 
     const handleCompleteCall = (request: CallRequest) => {
@@ -114,7 +118,7 @@ export default function AdminServiceRequestsModal({ service, isOpen, onClose }: 
                     adminRemarks
                 );
             } else if (selectedCallRequest) {
-                updateCallRequestStatus(selectedCallRequest.id, 'completed');
+                await updateCallRequestStatus(selectedCallRequest.id, 'completed');
             }
             setIsDetailOpen(false);
             setAdminRemarks('');

@@ -10,23 +10,30 @@ import { Button } from '@/components/ui/button';
 
 export default function AdminDashboard() {
   const { wallet } = useWallet();
-  const { getAllRequests, getStats, updateRequestStatus } = useRequests();
-  
-  const stats = getStats();
-  const recentRequests = getAllRequests().slice(0, 5);
+  const { getAllRequests, getAllCallRequests, getStats, updateRequestStatus, updateCallRequestStatus, acceptRequest } = useRequests();
 
-  const handleProcess = (requestId: string) => {
-    updateRequestStatus(requestId, 'processing', wallet.address || undefined);
+  const stats = getStats();
+  const allReqs = [...getAllRequests(), ...getAllCallRequests()]
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  const recentRequests = allReqs.slice(0, 5);
+
+  const handleProcess = async (requestId: string) => {
+    // Both REQ and CALL need to be 'accepted' first to assign the department
+    await acceptRequest(requestId);
   };
 
-  const handleComplete = (requestId: string) => {
-    updateRequestStatus(requestId, 'completed', wallet.address || undefined);
+  const handleComplete = async (requestId: string) => {
+    if (requestId.startsWith('REQ-')) {
+      await updateRequestStatus(requestId, 'completed', wallet.address || undefined);
+    } else if (requestId.startsWith('CALL-')) {
+      await updateCallRequestStatus(requestId, 'completed');
+    }
   };
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       <div className="container py-8">
         {/* Page Header */}
         <div className="mb-8">

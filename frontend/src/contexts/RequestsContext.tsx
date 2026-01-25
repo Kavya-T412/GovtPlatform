@@ -11,10 +11,10 @@ interface RequestsContextType {
   requests: ServiceRequest[];
   callRequests: CallRequest[];
   addRequest: (request: Omit<ServiceRequest, 'id' | 'createdAt' | 'updatedAt' | 'status'>) => Promise<string>;
-  addCallRequest: (request: Omit<CallRequest, 'id' | 'createdAt' | 'updatedAt' | 'status'>) => string;
+  addCallRequest: (request: Omit<CallRequest, 'id' | 'createdAt' | 'updatedAt' | 'status'>) => Promise<string>;
   updateRequestStatus: (id: string, status: ServiceRequest['status'], adminWallet?: string, remarks?: string) => Promise<void>;
   acceptRequest: (id: string) => Promise<void>;
-  updateCallRequestStatus: (id: string, status: CallRequest['status']) => void;
+  updateCallRequestStatus: (id: string, status: CallRequest['status']) => Promise<void>;
   getRequestsByWallet: (walletAddress: string) => ServiceRequest[];
   getCallRequestsByWallet: (walletAddress: string) => CallRequest[];
   getRequestsByService: (serviceId: string) => ServiceRequest[];
@@ -51,44 +51,67 @@ export const RequestsProvider: React.FC<{ children: ReactNode }> = ({ children }
     try {
       const total = await useContract().getTotalRequests();
       const blockchainRequests: ServiceRequest[] = [];
+      const blockchainCallRequests: CallRequest[] = [];
 
       // Loop through all requests on blockchain
-      // Contract uses 1-based indexing for request IDs
       for (let i = 1; i <= total; i++) {
         const data = await useContract().getServiceRequest(i);
         if (data) {
-          const statusMap: Record<number, ServiceRequest['status']> = {
-            0: 'pending',
-            1: 'processing',
-            2: 'completed',
-            3: 'rejected'
-          };
+          const isCallRequest = data.serviceCategory.startsWith('CALL:');
+          const cleanCategory = isCallRequest ? data.serviceCategory.replace('CALL:', '') : data.serviceCategory;
 
-          blockchainRequests.push({
-            id: `REQ-${data.requestId}`,
-            walletAddress: data.citizen,
-            role: 'user',
-            serviceId: data.serviceName.toLowerCase().replace(/\s+/g, '-'),
-            serviceName: data.serviceName,
-            categoryName: data.serviceCategory,
-            uploadedFiles: [], // On-chain doesn't store files
-            formFields: { fullName: 'Unknown (Blockchain Sync)', phone: '', address: '' }, // On-chain doesn't store fields
-            status: statusMap[data.status] || 'pending',
-            createdAt: new Date(Number(data.createdAt) * 1000),
-            updatedAt: new Date(Number(data.updatedAt) * 1000),
-            adminProcessedBy: data.department !== "0x0000000000000000000000000000000000000000" ? data.department : undefined,
-            requestType: 'online',
-            selectedItem: data.serviceName
-          });
+          if (isCallRequest) {
+            const statusMap: Record<number, CallRequest['status']> = {
+              0: 'pending',
+              1: 'contacted',
+              2: 'completed',
+              3: 'pending' // Mapping rejected call to pending for simplicity
+            };
+
+            blockchainCallRequests.push({
+              id: `CALL-${data.requestId}`,
+              walletAddress: data.citizen,
+              serviceId: data.serviceName.toLowerCase().replace(/\s+/g, '-'),
+              serviceName: data.serviceName,
+              categoryName: cleanCategory,
+              selectedItem: data.serviceName,
+              formFields: { fullName: 'Unknown (Blockchain Sync)', phone: '', preferredTime: 'Anytime' },
+              status: statusMap[data.status] || 'pending',
+              createdAt: new Date(Number(data.createdAt) * 1000),
+              updatedAt: new Date(Number(data.updatedAt) * 1000),
+            });
+          } else {
+            const statusMap: Record<number, ServiceRequest['status']> = {
+              0: 'pending',
+              1: 'processing',
+              2: 'completed',
+              3: 'rejected'
+            };
+
+            blockchainRequests.push({
+              id: `REQ-${data.requestId}`,
+              walletAddress: data.citizen,
+              role: 'user',
+              serviceId: data.serviceName.toLowerCase().replace(/\s+/g, '-'),
+              serviceName: data.serviceName,
+              categoryName: cleanCategory,
+              uploadedFiles: [],
+              formFields: { fullName: 'Unknown (Blockchain Sync)', phone: '', address: '' },
+              status: statusMap[data.status] || 'pending',
+              createdAt: new Date(Number(data.createdAt) * 1000),
+              updatedAt: new Date(Number(data.updatedAt) * 1000),
+              adminProcessedBy: data.department !== "0x0000000000000000000000000000000000000000" ? data.department : undefined,
+              requestType: 'online',
+              selectedItem: data.serviceName
+            });
+          }
         }
       }
 
       setRequests(prev => {
-        // Create a map of existing local requests by their blockchain ID
         const localMap = new Map();
         prev.forEach(req => localMap.set(req.id, req));
 
-        // Merge blockchain requests, keeping local detailed data if IDs match
         const merged = blockchainRequests.map(bReq => {
           const local = localMap.get(bReq.id);
           if (local) {
@@ -102,8 +125,25 @@ export const RequestsProvider: React.FC<{ children: ReactNode }> = ({ children }
           return bReq;
         });
 
-        // Add any local requests that aren't on blockchain yet (should be rare)
         const blockchainIdSet = new Set(blockchainRequests.map(r => r.id));
+        const localsOnly = prev.filter(r => !blockchainIdSet.has(r.id));
+
+        return [...merged, ...localsOnly].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+      });
+
+      setCallRequests(prev => {
+        const localMap = new Map();
+        prev.forEach(req => localMap.set(req.id, req));
+
+        const merged = blockchainCallRequests.map(bReq => {
+          const local = localMap.get(bReq.id);
+          if (local) {
+            return { ...bReq, formFields: local.formFields };
+          }
+          return bReq;
+        });
+
+        const blockchainIdSet = new Set(blockchainCallRequests.map(r => r.id));
         const localsOnly = prev.filter(r => !blockchainIdSet.has(r.id));
 
         return [...merged, ...localsOnly].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
@@ -202,7 +242,7 @@ export const RequestsProvider: React.FC<{ children: ReactNode }> = ({ children }
     }
   }, [requestService, isConnected, walletAddress, isCorrectNetwork, switchToSepolia]);
 
-  const addCallRequest = useCallback((request: Omit<CallRequest, 'id' | 'createdAt' | 'updatedAt' | 'status'>) => {
+  const addCallRequest = useCallback(async (request: Omit<CallRequest, 'id' | 'createdAt' | 'updatedAt' | 'status'>) => {
     const id = 'CALL' + Date.now().toString().slice(-6);
     const newCallRequest: CallRequest = {
       ...request,
@@ -211,30 +251,79 @@ export const RequestsProvider: React.FC<{ children: ReactNode }> = ({ children }
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-    setCallRequests(prev => [newCallRequest, ...prev]);
-    return id;
-  }, []);
+
+    if (isConnected && walletAddress) {
+      if (!isCorrectNetwork) {
+        toast.error('Please switch to Sepolia network');
+        throw new Error('Wrong network');
+      }
+
+      toast.loading('Submitting call request to blockchain...', { id: 'call-tx' });
+
+      try {
+        // Use CALL: prefix to identify call requests on-chain
+        const result = await requestService(`CALL:${request.categoryName}`, request.serviceName);
+
+        if (result.success) {
+          toast.success('Call request recorded on blockchain!', {
+            id: 'call-tx',
+            description: `ID: CALL-${result.requestId}`,
+          });
+
+          const blockchainId = result.requestId !== undefined ? `CALL-${result.requestId}` : id;
+          newCallRequest.id = blockchainId;
+          setCallRequests(prev => [newCallRequest, ...prev]);
+          return blockchainId;
+        } else {
+          toast.error('Blockchain submission failed', { id: 'call-tx' });
+          throw new Error(result.error);
+        }
+      } catch (error: any) {
+        toast.error('Transaction failed', { id: 'call-tx' });
+        throw error;
+      }
+    } else {
+      toast.info('Request saved locally (wallet not connected)');
+      setCallRequests(prev => [newCallRequest, ...prev]);
+      return id;
+    }
+  }, [requestService, isConnected, walletAddress, isCorrectNetwork]);
 
   // Accept request before processing
   const acceptRequest = useCallback(async (id: string) => {
     if (isConnected && walletAddress) {
-      // Extract numeric ID from REQ-ID or REQID format
-      const requestIdNumber = parseInt(id.split('-')[1] || id.replace('REQ', ''));
+      // Extract numeric ID from REQ-ID, CALL-ID or REQID/CALLID format
+      const isCall = id.startsWith('CALL');
+      const requestIdNumber = parseInt(id.split('-')[1] || id.replace('REQ', '').replace('CALL', ''));
+
       if (!isNaN(requestIdNumber)) {
         toast.loading('Accepting request...', { id: 'accept-req' });
-        const result = await acceptContractRequest(requestIdNumber);
-        if (result.success) {
-          toast.success('Request accepted! It is now in the Processing tab.', { id: 'accept-req' });
+        try {
+          const result = await acceptContractRequest(requestIdNumber);
+          if (result.success) {
+            toast.success('Request accepted! It is now in the Processing tab.', { id: 'accept-req' });
 
-          // Update local state to transition UI to "processing" status
-          setRequests(prev => prev.map(req =>
-            req.id === id
-              ? { ...req, status: 'processing', updatedAt: new Date(), adminProcessedBy: walletAddress || undefined }
-              : req
-          ));
-        } else {
-          toast.error('Failed to accept request', { id: 'accept-req', description: result.error });
-          throw new Error(result.error);
+            // Update appropriate local state to transition UI to "processing"/"contacted" status
+            if (isCall) {
+              setCallRequests(prev => prev.map(req =>
+                req.id === id
+                  ? { ...req, status: 'contacted', updatedAt: new Date() }
+                  : req
+              ));
+            } else {
+              setRequests(prev => prev.map(req =>
+                req.id === id
+                  ? { ...req, status: 'processing', updatedAt: new Date(), adminProcessedBy: walletAddress || undefined }
+                  : req
+              ));
+            }
+          } else {
+            toast.error('Failed to accept request', { id: 'accept-req', description: result.error });
+            throw new Error(result.error);
+          }
+        } catch (error: any) {
+          toast.error('Transaction failed', { id: 'accept-req', description: error.message });
+          throw error;
         }
       }
     }
@@ -349,13 +438,38 @@ export const RequestsProvider: React.FC<{ children: ReactNode }> = ({ children }
     }
   }, [updateContractStatus, acceptContractRequest, getServiceRequest, isConnected, walletAddress, isCorrectNetwork]);
 
-  const updateCallRequestStatus = useCallback((id: string, status: CallRequest['status']) => {
-    setCallRequests(prev => prev.map(req =>
-      req.id === id
-        ? { ...req, status, updatedAt: new Date() }
-        : req
-    ));
-  }, []);
+  const updateCallRequestStatus = useCallback(async (id: string, status: CallRequest['status']) => {
+    if (isConnected && walletAddress) {
+      const requestIdNumber = parseInt(id.split('-')[1] || id.replace('CALL', ''));
+      if (!isNaN(requestIdNumber)) {
+        // Map CallRequest status to blockchain ServiceStatus
+        const statusMap: Record<CallRequest['status'], ServiceStatus> = {
+          'pending': ServiceStatus.Pending,
+          'contacted': ServiceStatus.Processing, // Processing = Contacted for calls
+          'completed': ServiceStatus.Completed
+        };
+
+        toast.loading('Updating call status on blockchain...', { id: 'call-status' });
+        try {
+          const result = await updateContractStatus(requestIdNumber, statusMap[status]);
+          if (result.success) {
+            toast.success('Call status updated on blockchain!', { id: 'call-status' });
+            setCallRequests(prev => prev.map(req =>
+              req.id === id ? { ...req, status, updatedAt: new Date() } : req
+            ));
+          } else {
+            toast.error('Update failed', { id: 'call-status' });
+          }
+        } catch (error) {
+          toast.error('Transaction failed', { id: 'call-status' });
+        }
+      }
+    } else {
+      setCallRequests(prev => prev.map(req =>
+        req.id === id ? { ...req, status, updatedAt: new Date() } : req
+      ));
+    }
+  }, [updateContractStatus, isConnected, walletAddress]);
 
   const getRequestsByWallet = useCallback((walletAddress: string) => {
     return requests.filter(req => req.walletAddress.toLowerCase() === walletAddress.toLowerCase());

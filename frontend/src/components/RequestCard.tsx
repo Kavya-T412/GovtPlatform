@@ -1,12 +1,12 @@
 import React from 'react';
-import { Clock, CheckCircle, AlertCircle, FileText, User, ChevronRight } from 'lucide-react';
+import { Clock, CheckCircle, AlertCircle, FileText, User, ChevronRight, Phone } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ServiceRequest } from '@/types';
+import { ServiceRequest, CallRequest } from '@/types';
 
 interface RequestCardProps {
-  request: ServiceRequest;
+  request: ServiceRequest | CallRequest;
   onClick?: () => void;
   showAdminActions?: boolean;
   onProcess?: () => void;
@@ -24,6 +24,11 @@ const statusConfig = {
     icon: AlertCircle,
     className: 'status-processing',
   },
+  contacted: {
+    label: 'Contacted',
+    icon: Phone,
+    className: 'status-processing',
+  },
   completed: {
     label: 'Completed',
     icon: CheckCircle,
@@ -38,7 +43,7 @@ export default function RequestCard({
   onProcess,
   onComplete,
 }: RequestCardProps) {
-  const status = statusConfig[request.status];
+  const status = statusConfig[request.status as keyof typeof statusConfig] || statusConfig.pending;
   const StatusIcon = status.icon;
 
   const formatDate = (date: Date) => {
@@ -51,6 +56,10 @@ export default function RequestCard({
 
   const formatAddress = (address: string) => {
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  };
+
+  const isServiceRequest = (req: any): req is ServiceRequest => {
+    return 'uploadedFiles' in req;
   };
 
   return (
@@ -85,7 +94,7 @@ export default function RequestCard({
                 <Clock className="h-3 w-3" />
                 {formatDate(request.createdAt)}
               </span>
-              {request.uploadedFiles.length > 0 && (
+              {isServiceRequest(request) && request.uploadedFiles.length > 0 && (
                 <span className="flex items-center gap-1">
                   <FileText className="h-3 w-3" />
                   {request.uploadedFiles.length} file(s)
@@ -93,7 +102,7 @@ export default function RequestCard({
               )}
             </div>
 
-            {request.adminRemarks && (
+            {isServiceRequest(request) && request.adminRemarks && (
               <div className="mt-3 p-2 rounded-lg bg-muted">
                 <p className="text-xs text-muted-foreground">
                   <span className="font-medium">Admin remarks:</span> {request.adminRemarks}
@@ -118,7 +127,7 @@ export default function RequestCard({
                     Accept
                   </Button>
                 )}
-                {request.status === 'processing' && onComplete && (
+                {(request.status === 'processing' || request.status === 'contacted') && onComplete && (
                   <Button
                     size="sm"
                     onClick={(e) => {

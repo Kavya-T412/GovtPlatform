@@ -135,21 +135,27 @@ export default function ServiceDetailModal({ service, isOpen, onClose }: Service
 
     setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      // Simulate/Buffer for UX
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-    const id = addCallRequest({
-      walletAddress: wallet.address!,
-      serviceId: service.id,
-      serviceName: service.name,
-      categoryName: service.categoryName,
-      selectedItem,
-      formFields: callFormData,
-    });
+      const id = await addCallRequest({
+        walletAddress: wallet.address!,
+        serviceId: service.id,
+        serviceName: service.name,
+        categoryName: service.categoryName,
+        selectedItem: selectedItem,
+        formFields: callFormData,
+      });
 
-    setRequestId(id);
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+      setRequestId(id);
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error('Failed to submit call request:', error);
+      setIsSubmitting(false);
+      // Errors are handled by the context/toast
+    }
   };
 
   const handleClose = () => {
