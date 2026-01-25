@@ -216,6 +216,60 @@ export const RequestsProvider: React.FC<{ children: ReactNode }> = ({ children }
 
           // Only save to local state if blockchain transaction succeeded
           setRequests(prev => [newRequest, ...prev]);
+
+          // SYNC WITH MONGODB
+          try {
+            toast.loading('Syncing documents to MongoDB...', { id: 'mongo-sync' });
+            const formData = new FormData();
+
+            // Append form fields
+            Object.entries(request.formFields).forEach(([key, value]) => {
+              if (value) formData.append(key, value);
+            });
+
+            // Append basic application info
+            formData.append("serviceId", request.serviceId);
+            formData.append("serviceType", request.serviceName);
+            formData.append("walletAddress", request.walletAddress);
+            formData.append("blockchainTxHash", result.txHash || "");
+            formData.append("status", "Submitted");
+
+            // Append actual binary files
+            if (request.actualFiles && request.actualFiles.length > 0) {
+              request.actualFiles.forEach((file) => {
+                // Use a consistent field name prefix for files if needed, or just the file name
+                formData.append("documents", file);
+              });
+            }
+
+            const response = await fetch("http://127.0.0.1:5000/api/application/submit", {
+              method: "POST",
+              body: formData,
+            });
+
+            if (response.ok) {
+              toast.success('Documents synced to MongoDB!', { id: 'mongo-sync' });
+              console.log("Synced with MongoDB successfully (including files)");
+            } else {
+              const errorText = await response.text();
+              let errorData;
+              try {
+                errorData = JSON.parse(errorText);
+              } catch (e) {
+                errorData = { message: "Server returned non-JSON response", raw: errorText.slice(0, 100) };
+              }
+
+              toast.error('Failed to sync to MongoDB', {
+                id: 'mongo-sync',
+                description: errorData.message || 'Server error'
+              });
+              console.error("MongoDB sync failed:", errorData);
+            }
+          } catch (syncError) {
+            toast.error('Network error during MongoDB sync', { id: 'mongo-sync' });
+            console.error("Failed to sync with MongoDB:", syncError);
+          }
+
           return blockchainId;
         } else {
           toast.error('Blockchain submission failed', {

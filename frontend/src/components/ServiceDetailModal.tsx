@@ -34,6 +34,7 @@ export default function ServiceDetailModal({ service, isOpen, onClose }: Service
   const [viewMode, setViewMode] = useState<ViewMode>('overview');
   const [selectedItem, setSelectedItem] = useState<string>('');
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
+  const [actualFiles, setActualFiles] = useState<File[]>([]);
   const [formData, setFormData] = useState<RequestFormFields>({
     fullName: '',
     phone: '',
@@ -58,7 +59,10 @@ export default function ServiceDetailModal({ service, isOpen, onClose }: Service
     const files = e.target.files;
     if (!files) return;
 
-    const newFiles: UploadedFile[] = Array.from(files).map(file => ({
+    const fileList = Array.from(files);
+    setActualFiles(prev => [...prev, ...fileList]);
+
+    const newFiles: UploadedFile[] = fileList.map(file => ({
       name: file.name,
       url: URL.createObjectURL(file),
       type: file.type,
@@ -70,6 +74,7 @@ export default function ServiceDetailModal({ service, isOpen, onClose }: Service
 
   const removeFile = (index: number) => {
     setUploadedFiles(prev => prev.filter((_, i) => i !== index));
+    setActualFiles(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -111,6 +116,7 @@ export default function ServiceDetailModal({ service, isOpen, onClose }: Service
         serviceName: service.name,
         categoryName: service.categoryName,
         uploadedFiles,
+        actualFiles, // Pass the actual File objects
         formFields: formData,
         requestType: 'online',
         selectedItem,
@@ -160,6 +166,7 @@ export default function ServiceDetailModal({ service, isOpen, onClose }: Service
 
   const handleClose = () => {
     setUploadedFiles([]);
+    setActualFiles([]);
     setFormData({ fullName: '', phone: '', address: '', notes: '' });
     setCallFormData({ fullName: '', phone: '', email: '', preferredTime: '', notes: '' });
     setIsSubmitted(false);
@@ -173,6 +180,7 @@ export default function ServiceDetailModal({ service, isOpen, onClose }: Service
     setViewMode('overview');
     setSelectedItem('');
     setUploadedFiles([]);
+    setActualFiles([]);
     setFormData({ fullName: '', phone: '', address: '', notes: '' });
     setCallFormData({ fullName: '', phone: '', email: '', preferredTime: '', notes: '' });
   };
