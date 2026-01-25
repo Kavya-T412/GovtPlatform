@@ -18,12 +18,12 @@ const roleRoutes: Record<UserRole, string> = {
 
 export const RoleProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [role, setRole] = useState<UserRole>(() => {
-    const savedRole = localStorage.getItem('pastelgov-role');
+    const savedRole = localStorage.getItem('civicchain-role');
     return (savedRole as UserRole) || 'user';
   });
 
   useEffect(() => {
-    localStorage.setItem('pastelgov-role', role);
+    localStorage.setItem('civicchain-role', role);
   }, [role]);
 
   return (
