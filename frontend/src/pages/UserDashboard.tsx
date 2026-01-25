@@ -11,26 +11,34 @@ import { useRequests } from '@/contexts/RequestsContext';
 
 export default function UserDashboard() {
   const { wallet } = useWallet();
-  const { getRequestsByWallet } = useRequests();
+  const { getRequestsByWallet, getCallRequestsByWallet } = useRequests();
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('all');
 
   const userRequests = useMemo(() => {
     if (!wallet.address) return [];
-    return getRequestsByWallet(wallet.address);
-  }, [wallet.address, getRequestsByWallet]);
+    const regular = getRequestsByWallet(wallet.address);
+    const calls = getCallRequestsByWallet(wallet.address);
+    // Combine and sort by date
+    return [...regular, ...calls].sort((a, b) =>
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+  }, [wallet.address, getRequestsByWallet, getCallRequestsByWallet]);
 
   const stats = useMemo(() => {
     return {
       total: userRequests.length,
       pending: userRequests.filter(r => r.status === 'pending').length,
-      processing: userRequests.filter(r => r.status === 'processing').length,
+      processing: userRequests.filter(r => r.status === 'processing' || r.status === 'contacted').length,
       completed: userRequests.filter(r => r.status === 'completed').length,
     };
   }, [userRequests]);
 
   const filteredRequests = useMemo(() => {
     if (activeTab === 'all') return userRequests;
+    if (activeTab === 'processing') {
+      return userRequests.filter(r => r.status === 'processing' || r.status === 'contacted');
+    }
     return userRequests.filter(r => r.status === activeTab);
   }, [userRequests, activeTab]);
 
@@ -53,7 +61,7 @@ export default function UserDashboard() {
             <p className="text-muted-foreground mb-6">
               Connect your wallet to view your dashboard and track your service requests.
             </p>
-            <Button 
+            <Button
               onClick={() => setIsWalletModalOpen(true)}
               className="bg-gradient-primary hover:opacity-90"
             >
@@ -72,7 +80,7 @@ export default function UserDashboard() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       <div className="container py-8">
         {/* Page Header */}
         <div className="mb-8">
@@ -116,10 +124,10 @@ export default function UserDashboard() {
         {/* Requests Section */}
         <div className="bg-card rounded-2xl border border-border/50 p-6">
           <h2 className="text-xl font-semibold text-foreground mb-6">My Requests</h2>
-          
+
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="mb-6">
-              <TabsTrigger value="all">All ({stats.total})</TabsTrigger>
+              <TabsTrigger value="all">All ({userRequests.length})</TabsTrigger>
               <TabsTrigger value="pending">Pending ({stats.pending})</TabsTrigger>
               <TabsTrigger value="processing">Processing ({stats.processing})</TabsTrigger>
               <TabsTrigger value="completed">Completed ({stats.completed})</TabsTrigger>
