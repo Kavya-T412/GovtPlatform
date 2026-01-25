@@ -38,24 +38,25 @@ const initialCallRequests: CallRequest[] = [];
 export const RequestsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [requests, setRequests] = useState<ServiceRequest[]>(initialRequests);
   const [callRequests, setCallRequests] = useState<CallRequest[]>(initialCallRequests);
-  const { requestService, updateServiceStatus: updateContractStatus, acceptServiceRequest: acceptContractRequest, getServiceRequest, addDepartment, isDepartment } = useContract();
+  const { requestService, updateServiceStatus: updateContractStatus, acceptServiceRequest: acceptContractRequest, getServiceRequest, addDepartment, isDepartment, getTotalRequests } = useContract();
   const { walletAddress, isConnected } = useWallet();
   const { isCorrectNetwork, switchToSepolia } = useBlockchain();
   const [isSyncing, setIsSyncing] = useState(false);
 
   // Sync blockchain requests
+
   const fetchBlockchainRequests = useCallback(async () => {
-    if (!isConnected || !isCorrectNetwork) return;
+    if (!isConnected || !isCorrectNetwork || !walletAddress) return;
 
     setIsSyncing(true);
     try {
-      const total = await useContract().getTotalRequests();
+      const total = await getTotalRequests();
       const blockchainRequests: ServiceRequest[] = [];
       const blockchainCallRequests: CallRequest[] = [];
 
       // Loop through all requests on blockchain
       for (let i = 1; i <= total; i++) {
-        const data = await useContract().getServiceRequest(i);
+        const data = await getServiceRequest(i);
         if (data) {
           const isCallRequest = data.serviceCategory.startsWith('CALL:');
           const cleanCategory = isCallRequest ? data.serviceCategory.replace('CALL:', '') : data.serviceCategory;
@@ -242,7 +243,8 @@ export const RequestsProvider: React.FC<{ children: ReactNode }> = ({ children }
               });
             }
 
-            const response = await fetch("http://127.0.0.1:5000/api/application/submit", {
+            const API_BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
+            const response = await fetch(`${API_BASE_URL}/api/application/submit`, {
               method: "POST",
               body: formData,
             });
