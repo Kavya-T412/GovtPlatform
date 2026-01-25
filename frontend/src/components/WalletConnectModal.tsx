@@ -106,7 +106,7 @@ export default function WalletConnectModal({ isOpen, onClose }: WalletConnectMod
 
         <div className="mt-4 p-4 rounded-lg bg-pastel-lavender">
           <p className="text-xs text-muted-foreground text-center">
-            By connecting a wallet, you agree to PastelGov's Terms of Service and Privacy Policy
+            By connecting a wallet, you agree to CivicChain's Terms of Service and Privacy Policy
           </p>
         </div>
       </DialogContent>
