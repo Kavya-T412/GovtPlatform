@@ -1,0 +1,270 @@
+[
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_requestId",
+                "type": "uint256"
+            }
+        ],
+        "name": "acceptServiceRequest",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_department",
+                "type": "address"
+            }
+        ],
+        "name": "addDepartment",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_department",
+                "type": "address"
+            }
+        ],
+        "name": "removeDepartment",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_serviceCategory",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_serviceName",
+                "type": "string"
+            }
+        ],
+        "name": "requestService",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "department",
+                "type": "address"
+            }
+        ],
+        "name": "DepartmentAdded",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "department",
+                "type": "address"
+            }
+        ],
+        "name": "DepartmentRemoved",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "requestId",
+                "type": "uint256"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "citizen",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "serviceCategory",
+                "type": "string"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "serviceName",
+                "type": "string"
+            }
+        ],
+        "name": "ServiceRequested",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "requestId",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "enum GovtPlatform.ServiceStatus",
+                "name": "status",
+                "type": "uint8"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "updatedBy",
+                "type": "address"
+            }
+        ],
+        "name": "ServiceStatusUpdated",
+        "type": "event"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_requestId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "enum GovtPlatform.ServiceStatus",
+                "name": "_status",
+                "type": "uint8"
+            }
+        ],
+        "name": "updateServiceStatus",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "admin",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "name": "departments",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_requestId",
+                "type": "uint256"
+            }
+        ],
+        "name": "getServiceRequest",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "uint256",
+                        "name": "requestId",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "citizen",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "serviceCategory",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "serviceName",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "department",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "enum GovtPlatform.ServiceStatus",
+                        "name": "status",
+                        "type": "uint8"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "createdAt",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "updatedAt",
+                        "type": "uint256"
+                    }
+                ],
+                "internalType": "struct GovtPlatform.ServiceRequest",
+                "name": "",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getTotalRequests",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]

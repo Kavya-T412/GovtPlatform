@@ -1,0 +1,871 @@
+{
+  "categories": [
+    { "id": "tax", "name": "Tax Services", "icon": "Receipt", "color": "lavender" },
+    { "id": "education", "name": "Education", "icon": "GraduationCap", "color": "mint" },
+    { "id": "health", "name": "Health & Wellness", "icon": "Heart", "color": "peach" },
+    { "id": "finance", "name": "Banking & Finance", "icon": "Landmark", "color": "blue" },
+    { "id": "transport", "name": "Transport & Travel", "icon": "Car", "color": "yellow" },
+    { "id": "utilities", "name": "Utilities & Bills", "icon": "Zap", "color": "pink" },
+    { "id": "employment", "name": "Employment", "icon": "Briefcase", "color": "lavender" },
+    { "id": "identity", "name": "Identity & Certificates", "icon": "IdCard", "color": "mint" },
+    { "id": "property", "name": "Property & Land", "icon": "Home", "color": "peach" },
+    { "id": "agriculture", "name": "Agriculture", "icon": "Leaf", "color": "mint" },
+    { "id": "social", "name": "Social Welfare", "icon": "Users", "color": "blue" },
+    { "id": "legal", "name": "Legal Services", "icon": "Scale", "color": "lavender" },
+    { "id": "business", "name": "Business & Commerce", "icon": "Building2", "color": "yellow" },
+    { "id": "pension", "name": "Pension & Retirement", "icon": "Wallet", "color": "peach" },
+    { "id": "insurance", "name": "Insurance", "icon": "Shield", "color": "blue" }
+  ],
+  "services": [
+    {
+      "id": "itr-filing",
+      "name": "Income Tax Return Filing",
+      "categoryId": "tax",
+      "categoryName": "Tax Services",
+      "description": "File your annual income tax returns online. Get instant acknowledgment and track refund status.",
+      "requiredDocuments": ["PAN Card", "Aadhaar Card", "Form 16", "Bank Statements", "Investment Proofs"],
+      "onlinePossibleItems": ["ITR Filing", "View Tax Credit Statement", "Download Form 26AS", "Check Refund Status", "Generate Challan"],
+      "offlineRequiredItems": ["Physical verification for high-value transactions", "Original documents for audit cases"]
+    },
+    {
+      "id": "pan-application",
+      "name": "PAN Card Application",
+      "categoryId": "tax",
+      "categoryName": "Tax Services",
+      "description": "Apply for new PAN card or request corrections in existing PAN details.",
+      "requiredDocuments": ["Aadhaar Card", "Passport Photo", "Address Proof", "Date of Birth Proof"],
+      "onlinePossibleItems": ["New PAN Application", "PAN Correction", "Reprint PAN Card", "Link Aadhaar with PAN"],
+      "offlineRequiredItems": ["Biometric verification at authorized centers"]
+    },
+    {
+      "id": "gst-registration",
+      "name": "GST Registration",
+      "categoryId": "tax",
+      "categoryName": "Tax Services",
+      "description": "Register for Goods and Services Tax and obtain your GSTIN number.",
+      "requiredDocuments": ["PAN Card", "Aadhaar Card", "Business Address Proof", "Bank Account Details", "Business Registration Certificate"],
+      "onlinePossibleItems": ["New GST Registration", "GST Return Filing", "View GST Profile", "Generate E-Way Bill"],
+      "offlineRequiredItems": ["Physical verification of business premises"]
+    },
+    {
+      "id": "tds-certificate",
+      "name": "TDS Certificate Download",
+      "categoryId": "tax",
+      "categoryName": "Tax Services",
+      "description": "Download Form 16/16A TDS certificates from your employer or deductor.",
+      "requiredDocuments": ["PAN Card", "TAN of Deductor"],
+      "onlinePossibleItems": ["Download Form 16", "Download Form 16A", "View TDS Statement", "File TDS Grievance"],
+      "offlineRequiredItems": []
+    },
+    {
+      "id": "property-tax",
+      "name": "Property Tax Payment",
+      "categoryId": "tax",
+      "categoryName": "Tax Services",
+      "description": "Pay your municipal property tax online and download receipts.",
+      "requiredDocuments": ["Property ID", "Ownership Documents", "Previous Tax Receipts"],
+      "onlinePossibleItems": ["Pay Property Tax", "View Tax History", "Download Receipts", "Update Property Details"],
+      "offlineRequiredItems": ["Property assessment for new constructions"]
+    },
+    {
+      "id": "scholarship-apply",
+      "name": "National Scholarship Portal",
+      "categoryId": "education",
+      "categoryName": "Education",
+      "description": "Apply for various central and state government scholarships for students.",
+      "requiredDocuments": ["Aadhaar Card", "Income Certificate", "Caste Certificate", "Previous Year Marksheet", "Bank Account Details", "Institution Verification Letter"],
+      "onlinePossibleItems": ["Apply for Scholarship", "Track Application Status", "Renewal Application", "Download Sanction Letter"],
+      "offlineRequiredItems": ["Institution verification", "Document verification at nodal center"]
+    },
+    {
+      "id": "education-loan",
+      "name": "Education Loan Application",
+      "categoryId": "education",
+      "categoryName": "Education",
+      "description": "Apply for education loans from various banks through a single platform.",
+      "requiredDocuments": ["Admission Letter", "Fee Structure", "Income Proof of Co-applicant", "Collateral Documents", "Academic Records"],
+      "onlinePossibleItems": ["Loan Application", "Check Eligibility", "Track Application", "EMI Calculator"],
+      "offlineRequiredItems": ["Document verification at bank", "Collateral evaluation"]
+    },
+    {
+      "id": "digilocker",
+      "name": "DigiLocker - Document Storage",
+      "categoryId": "education",
+      "categoryName": "Education",
+      "description": "Access your academic documents and certificates in digital format.",
+      "requiredDocuments": ["Aadhaar Card", "Mobile Number linked with Aadhaar"],
+      "onlinePossibleItems": ["Access Marksheets", "Download Certificates", "Share Documents", "Verify Documents"],
+      "offlineRequiredItems": []
+    },
+    {
+      "id": "cbse-results",
+      "name": "CBSE Board Results",
+      "categoryId": "education",
+      "categoryName": "Education",
+      "description": "Check and download CBSE board examination results.",
+      "requiredDocuments": ["Roll Number", "Date of Birth", "School Code"],
+      "onlinePossibleItems": ["Check Results", "Download Marksheet", "Verify Results", "Apply for Re-evaluation"],
+      "offlineRequiredItems": ["Original marksheet collection from school"]
+    },
+    {
+      "id": "competitive-exam",
+      "name": "Competitive Exam Registration",
+      "categoryId": "education",
+      "categoryName": "Education",
+      "description": "Register for various competitive examinations like UPSC, SSC, Railway etc.",
+      "requiredDocuments": ["Photo", "Signature", "Aadhaar Card", "Category Certificate", "Educational Certificates"],
+      "onlinePossibleItems": ["Exam Registration", "Download Admit Card", "Check Results", "Application Status"],
+      "offlineRequiredItems": ["Exam center attendance", "Document verification during interview"]
+    },
+    {
+      "id": "ayushman-bharat",
+      "name": "Ayushman Bharat Card",
+      "categoryId": "health",
+      "categoryName": "Health & Wellness",
+      "description": "Apply for Ayushman Bharat Pradhan Mantri Jan Arogya Yojana health card.",
+      "requiredDocuments": ["Aadhaar Card", "Ration Card", "Family Income Certificate"],
+      "onlinePossibleItems": ["Check Eligibility", "Download E-Card", "Find Hospitals", "Track Treatment"],
+      "offlineRequiredItems": ["Card printing at Common Service Center", "Hospital admission verification"]
+    },
+    {
+      "id": "covid-vaccine",
+      "name": "COVID Vaccination Certificate",
+      "categoryId": "health",
+      "categoryName": "Health & Wellness",
+      "description": "Download your COVID-19 vaccination certificate from CoWIN.",
+      "requiredDocuments": ["Aadhaar Card or Vaccination ID", "Mobile Number used during registration"],
+      "onlinePossibleItems": ["Download Certificate", "Schedule Appointment", "Correct Details", "International Certificate"],
+      "offlineRequiredItems": ["Vaccination at designated centers"]
+    },
+    {
+      "id": "hospital-opd",
+      "name": "Hospital OPD Appointment",
+      "categoryId": "health",
+      "categoryName": "Health & Wellness",
+      "description": "Book online OPD appointments at government hospitals.",
+      "requiredDocuments": ["Health ID", "Previous Medical Records", "Referral Letter if applicable"],
+      "onlinePossibleItems": ["Book Appointment", "View Available Slots", "Cancel/Reschedule", "Download Prescription"],
+      "offlineRequiredItems": ["Physical consultation", "Lab tests at hospital"]
+    },
+    {
+      "id": "blood-bank",
+      "name": "Blood Bank Services",
+      "categoryId": "health",
+      "categoryName": "Health & Wellness",
+      "description": "Find blood banks, request blood, and register as a donor.",
+      "requiredDocuments": ["ID Proof", "Medical Certificate for donation eligibility"],
+      "onlinePossibleItems": ["Search Blood Banks", "Check Availability", "Register as Donor", "Request Blood"],
+      "offlineRequiredItems": ["Physical blood donation", "Blood collection at center"]
+    },
+    {
+      "id": "health-id",
+      "name": "Ayushman Bharat Health ID",
+      "categoryId": "health",
+      "categoryName": "Health & Wellness",
+      "description": "Create your unique Health ID for digital health records.",
+      "requiredDocuments": ["Aadhaar Card", "Mobile Number"],
+      "onlinePossibleItems": ["Create Health ID", "Link Health Records", "Share Records with Doctor", "Update Profile"],
+      "offlineRequiredItems": []
+    },
+    {
+      "id": "bank-account",
+      "name": "Bank Account Opening",
+      "categoryId": "finance",
+      "categoryName": "Banking & Finance",
+      "description": "Open savings or current account with various banks online.",
+      "requiredDocuments": ["Aadhaar Card", "PAN Card", "Passport Photo", "Address Proof", "Income Proof for premium accounts"],
+      "onlinePossibleItems": ["Apply Online", "Video KYC", "Track Application", "Activate Account"],
+      "offlineRequiredItems": ["Physical verification for non-video KYC", "Signature verification"]
+    },
+    {
+      "id": "epf-withdrawal",
+      "name": "EPF Withdrawal",
+      "categoryId": "finance",
+      "categoryName": "Banking & Finance",
+      "description": "Withdraw your Employees Provident Fund online.",
+      "requiredDocuments": ["UAN Number", "Bank Account linked with UAN", "Aadhaar linked with UAN"],
+      "onlinePossibleItems": ["Apply for Withdrawal", "Check Balance", "Track Claim Status", "Update KYC"],
+      "offlineRequiredItems": ["Employer attestation for certain claims"]
+    },
+    {
+      "id": "nps-registration",
+      "name": "National Pension Scheme",
+      "categoryId": "finance",
+      "categoryName": "Banking & Finance",
+      "description": "Register for NPS and manage your retirement savings.",
+      "requiredDocuments": ["PAN Card", "Aadhaar Card", "Bank Account Details", "Photo", "Signature"],
+      "onlinePossibleItems": ["Open NPS Account", "Contribute Online", "Change Fund Manager", "Download Statements"],
+      "offlineRequiredItems": ["Physical verification at Point of Presence"]
+    },
+    {
+      "id": "mudra-loan",
+      "name": "MUDRA Loan Application",
+      "categoryId": "finance",
+      "categoryName": "Banking & Finance",
+      "description": "Apply for MUDRA loans for small business financing.",
+      "requiredDocuments": ["Business Plan", "Identity Proof", "Address Proof", "Bank Statements", "Business Registration"],
+      "onlinePossibleItems": ["Check Eligibility", "Apply Online", "Track Application", "Calculate EMI"],
+      "offlineRequiredItems": ["Business verification", "Field inspection by bank"]
+    },
+    {
+      "id": "pm-kisan",
+      "name": "PM-KISAN Registration",
+      "categoryId": "finance",
+      "categoryName": "Banking & Finance",
+      "description": "Register for Pradhan Mantri Kisan Samman Nidhi scheme.",
+      "requiredDocuments": ["Aadhaar Card", "Land Records", "Bank Account Details"],
+      "onlinePossibleItems": ["New Registration", "Check Payment Status", "Update Details", "Check Beneficiary Status"],
+      "offlineRequiredItems": ["Land verification by state authorities"]
+    },
+    {
+      "id": "driving-license",
+      "name": "Driving License Application",
+      "categoryId": "transport",
+      "categoryName": "Transport & Travel",
+      "description": "Apply for new driving license or renew existing one.",
+      "requiredDocuments": ["Aadhaar Card", "Address Proof", "Medical Certificate", "Passport Photos", "Learning License"],
+      "onlinePossibleItems": ["Apply for Learner License", "Book Driving Test Slot", "Apply for DL Renewal", "Download DL"],
+      "offlineRequiredItems": ["Driving test at RTO", "Medical examination"]
+    },
+    {
+      "id": "vehicle-registration",
+      "name": "Vehicle Registration",
+      "categoryId": "transport",
+      "categoryName": "Transport & Travel",
+      "description": "Register new vehicles and manage vehicle documents.",
+      "requiredDocuments": ["Invoice", "Insurance Certificate", "PUC Certificate", "Form 20", "ID Proof", "Address Proof"],
+      "onlinePossibleItems": ["Apply for Registration", "Pay Road Tax", "Download RC", "Transfer Ownership Application"],
+      "offlineRequiredItems": ["Vehicle inspection at RTO", "Physical verification"]
+    },
+    {
+      "id": "passport",
+      "name": "Passport Application",
+      "categoryId": "transport",
+      "categoryName": "Transport & Travel",
+      "description": "Apply for new passport or renew existing passport.",
+      "requiredDocuments": ["Aadhaar Card", "Birth Certificate", "Address Proof", "Educational Certificates", "Photos"],
+      "onlinePossibleItems": ["Fresh Passport Application", "Renewal Application", "Book Appointment", "Track Application"],
+      "offlineRequiredItems": ["Appointment at Passport Seva Kendra", "Police verification"]
+    },
+    {
+      "id": "fastag",
+      "name": "FASTag Application",
+      "categoryId": "transport",
+      "categoryName": "Transport & Travel",
+      "description": "Apply for FASTag for electronic toll collection.",
+      "requiredDocuments": ["Vehicle RC", "ID Proof", "Passport Photo"],
+      "onlinePossibleItems": ["Apply for FASTag", "Recharge FASTag", "Link Bank Account", "Track Transactions"],
+      "offlineRequiredItems": ["FASTag installation on vehicle"]
+    },
+    {
+      "id": "railway-booking",
+      "name": "Railway Ticket Booking",
+      "categoryId": "transport",
+      "categoryName": "Transport & Travel",
+      "description": "Book train tickets, check PNR status and manage reservations.",
+      "requiredDocuments": ["ID Proof for journey"],
+      "onlinePossibleItems": ["Book Tickets", "Cancel Tickets", "Check PNR Status", "Download E-Ticket"],
+      "offlineRequiredItems": ["ID verification during journey"]
+    },
+    {
+      "id": "electricity-bill",
+      "name": "Electricity Bill Payment",
+      "categoryId": "utilities",
+      "categoryName": "Utilities & Bills",
+      "description": "Pay electricity bills for all major state electricity boards.",
+      "requiredDocuments": ["Consumer Number", "Account Number"],
+      "onlinePossibleItems": ["Pay Bill", "View Bill History", "Download Receipt", "Set Auto-Pay"],
+      "offlineRequiredItems": ["Meter reading disputes require physical inspection"]
+    },
+    {
+      "id": "water-bill",
+      "name": "Water Bill Payment",
+      "categoryId": "utilities",
+      "categoryName": "Utilities & Bills",
+      "description": "Pay water supply bills online.",
+      "requiredDocuments": ["Consumer Number", "Property ID"],
+      "onlinePossibleItems": ["Pay Bill", "View Consumption", "Register Complaint", "Download Receipt"],
+      "offlineRequiredItems": ["Meter reading", "Leak inspection"]
+    },
+    {
+      "id": "gas-connection",
+      "name": "LPG Gas Connection",
+      "categoryId": "utilities",
+      "categoryName": "Utilities & Bills",
+      "description": "Apply for new LPG connection or manage existing one.",
+      "requiredDocuments": ["Aadhaar Card", "Address Proof", "Passport Photo", "Bank Account Details"],
+      "onlinePossibleItems": ["New Connection", "Book Refill", "Check Subsidy", "Update Details"],
+      "offlineRequiredItems": ["Connection installation", "Cylinder delivery"]
+    },
+    {
+      "id": "broadband",
+      "name": "Broadband Connection",
+      "categoryId": "utilities",
+      "categoryName": "Utilities & Bills",
+      "description": "Apply for BSNL/government broadband connections.",
+      "requiredDocuments": ["ID Proof", "Address Proof", "Landline Number if applicable"],
+      "onlinePossibleItems": ["New Connection", "Plan Change", "Pay Bill", "Check Speed"],
+      "offlineRequiredItems": ["Router installation", "Line connection"]
+    },
+    {
+      "id": "employment-registration",
+      "name": "Employment Exchange Registration",
+      "categoryId": "employment",
+      "categoryName": "Employment",
+      "description": "Register at employment exchange for government job notifications.",
+      "requiredDocuments": ["Educational Certificates", "Aadhaar Card", "Caste Certificate", "Passport Photos"],
+      "onlinePossibleItems": ["New Registration", "Renewal", "Update Qualifications", "View Job Vacancies"],
+      "offlineRequiredItems": ["Document verification at employment office"]
+    },
+    {
+      "id": "epfo-services",
+      "name": "EPFO Services",
+      "categoryId": "employment",
+      "categoryName": "Employment",
+      "description": "Access all EPF related services - balance, claims, transfer.",
+      "requiredDocuments": ["UAN Number", "Aadhaar Card", "Bank Account Details"],
+      "onlinePossibleItems": ["Check Balance", "Download Passbook", "Claim Settlement", "Transfer Request"],
+      "offlineRequiredItems": ["Physical claim for certain cases"]
+    },
+    {
+      "id": "esic",
+      "name": "ESIC Portal Services",
+      "categoryId": "employment",
+      "categoryName": "Employment",
+      "description": "Access ESI benefits including medical claims and hospitals.",
+      "requiredDocuments": ["ESIC Number", "Aadhaar Card"],
+      "onlinePossibleItems": ["Download ESIC Card", "Find Hospital", "Track Claims", "Update Dependents"],
+      "offlineRequiredItems": ["Medical treatment at panel hospitals"]
+    },
+    {
+      "id": "skill-training",
+      "name": "Skill India Training",
+      "categoryId": "employment",
+      "categoryName": "Employment",
+      "description": "Register for skill development training programs.",
+      "requiredDocuments": ["Aadhaar Card", "Educational Certificates", "Bank Account Details"],
+      "onlinePossibleItems": ["Find Courses", "Register for Training", "Download Certificate", "Track Progress"],
+      "offlineRequiredItems": ["Attend training sessions", "Practical assessments"]
+    },
+    {
+      "id": "aadhaar-services",
+      "name": "Aadhaar Services",
+      "categoryId": "identity",
+      "categoryName": "Identity & Certificates",
+      "description": "Update Aadhaar details, download e-Aadhaar, and more.",
+      "requiredDocuments": ["Aadhaar Number", "Registered Mobile Number"],
+      "onlinePossibleItems": ["Download e-Aadhaar", "Check Update Status", "Verify Aadhaar", "Lock/Unlock Biometrics"],
+      "offlineRequiredItems": ["Biometric update at enrollment center"]
+    },
+    {
+      "id": "birth-certificate",
+      "name": "Birth Certificate",
+      "categoryId": "identity",
+      "categoryName": "Identity & Certificates",
+      "description": "Apply for birth certificate or obtain duplicate copy.",
+      "requiredDocuments": ["Hospital Discharge Certificate", "Parent ID Proofs", "Address Proof"],
+      "onlinePossibleItems": ["Apply Online", "Track Application", "Download Certificate", "Apply for Correction"],
+      "offlineRequiredItems": ["Verification at registrar office"]
+    },
+    {
+      "id": "death-certificate",
+      "name": "Death Certificate",
+      "categoryId": "identity",
+      "categoryName": "Identity & Certificates",
+      "description": "Apply for death certificate for legal and administrative purposes.",
+      "requiredDocuments": ["Hospital Death Certificate", "Deceased ID Proof", "Applicant ID Proof"],
+      "onlinePossibleItems": ["Apply Online", "Track Application", "Download Certificate"],
+      "offlineRequiredItems": ["Verification at registrar office"]
+    },
+    {
+      "id": "caste-certificate",
+      "name": "Caste Certificate",
+      "categoryId": "identity",
+      "categoryName": "Identity & Certificates",
+      "description": "Apply for caste certificate for reservation benefits.",
+      "requiredDocuments": ["Aadhaar Card", "Ration Card", "School Certificate", "Father's Caste Certificate"],
+      "onlinePossibleItems": ["Apply Online", "Track Application", "Download Certificate"],
+      "offlineRequiredItems": ["Verification by Tehsildar/SDM office"]
+    },
+    {
+      "id": "income-certificate",
+      "name": "Income Certificate",
+      "categoryId": "identity",
+      "categoryName": "Identity & Certificates",
+      "description": "Apply for income certificate for various schemes.",
+      "requiredDocuments": ["Aadhaar Card", "Ration Card", "Salary Slip/Income Proof", "Self Declaration"],
+      "onlinePossibleItems": ["Apply Online", "Track Application", "Download Certificate"],
+      "offlineRequiredItems": ["Verification by local revenue officer"]
+    },
+    {
+      "id": "domicile-certificate",
+      "name": "Domicile Certificate",
+      "categoryId": "identity",
+      "categoryName": "Identity & Certificates",
+      "description": "Apply for domicile/residence certificate.",
+      "requiredDocuments": ["Aadhaar Card", "Ration Card", "Birth Certificate", "Address Proof"],
+      "onlinePossibleItems": ["Apply Online", "Track Application", "Download Certificate"],
+      "offlineRequiredItems": ["Verification at SDM office"]
+    },
+    {
+      "id": "land-records",
+      "name": "Land Records",
+      "categoryId": "property",
+      "categoryName": "Property & Land",
+      "description": "Access digitized land records, Khata, and ownership details.",
+      "requiredDocuments": ["Survey Number", "Owner Details", "Land Location"],
+      "onlinePossibleItems": ["View Land Records", "Download RTC", "Check Encumbrance", "View Mutation Status"],
+      "offlineRequiredItems": ["Physical survey for disputes"]
+    },
+    {
+      "id": "property-registration",
+      "name": "Property Registration",
+      "categoryId": "property",
+      "categoryName": "Property & Land",
+      "description": "Register property documents and stamp duty payment.",
+      "requiredDocuments": ["Sale Deed", "ID Proofs of parties", "Property Documents", "Encumbrance Certificate"],
+      "onlinePossibleItems": ["Book Appointment", "Calculate Stamp Duty", "Pay Stamp Duty", "Track Registration"],
+      "offlineRequiredItems": ["Document execution at Sub-Registrar office", "Biometric verification"]
+    },
+    {
+      "id": "building-approval",
+      "name": "Building Plan Approval",
+      "categoryId": "property",
+      "categoryName": "Property & Land",
+      "description": "Apply for building plan approval and construction permits.",
+      "requiredDocuments": ["Land Documents", "Building Plan", "NOC from various departments", "Architect Certificate"],
+      "onlinePossibleItems": ["Submit Application", "Track Status", "Pay Fees", "Download Approval"],
+      "offlineRequiredItems": ["Site inspection", "Physical verification"]
+    },
+    {
+      "id": "encumbrance",
+      "name": "Encumbrance Certificate",
+      "categoryId": "property",
+      "categoryName": "Property & Land",
+      "description": "Obtain encumbrance certificate for property transactions.",
+      "requiredDocuments": ["Property Details", "Registration Number", "ID Proof"],
+      "onlinePossibleItems": ["Apply Online", "Download Certificate", "Verify Certificate"],
+      "offlineRequiredItems": ["Collection at Sub-Registrar office in some states"]
+    },
+    {
+      "id": "farmer-registration",
+      "name": "Farmer Registration",
+      "categoryId": "agriculture",
+      "categoryName": "Agriculture",
+      "description": "Register as farmer for various government schemes.",
+      "requiredDocuments": ["Aadhaar Card", "Land Records", "Bank Account Details", "Passport Photo"],
+      "onlinePossibleItems": ["New Registration", "Update Details", "View Schemes", "Apply for Benefits"],
+      "offlineRequiredItems": ["Land verification by agriculture officer"]
+    },
+    {
+      "id": "soil-health",
+      "name": "Soil Health Card",
+      "categoryId": "agriculture",
+      "categoryName": "Agriculture",
+      "description": "Get soil health card with nutrient status and recommendations.",
+      "requiredDocuments": ["Farmer ID", "Land Details", "Aadhaar Card"],
+      "onlinePossibleItems": ["Request Soil Test", "Download Soil Health Card", "View Recommendations"],
+      "offlineRequiredItems": ["Soil sample collection", "Lab testing"]
+    },
+    {
+      "id": "crop-insurance",
+      "name": "Pradhan Mantri Fasal Bima",
+      "categoryId": "agriculture",
+      "categoryName": "Agriculture",
+      "description": "Apply for crop insurance under PM Fasal Bima Yojana.",
+      "requiredDocuments": ["Farmer ID", "Land Records", "Bank Account", "Sowing Certificate"],
+      "onlinePossibleItems": ["Apply for Insurance", "Calculate Premium", "Track Claim", "Check Coverage"],
+      "offlineRequiredItems": ["Crop assessment by agriculture department"]
+    },
+    {
+      "id": "mandi-prices",
+      "name": "Mandi Prices & eNAM",
+      "categoryId": "agriculture",
+      "categoryName": "Agriculture",
+      "description": "Check agricultural commodity prices and trade online.",
+      "requiredDocuments": ["Farmer Registration", "Bank Account", "Produce Details"],
+      "onlinePossibleItems": ["Check Prices", "Create Lot", "View Bids", "Accept Payment"],
+      "offlineRequiredItems": ["Physical delivery at mandi"]
+    },
+    {
+      "id": "ration-card",
+      "name": "Ration Card Services",
+      "categoryId": "social",
+      "categoryName": "Social Welfare",
+      "description": "Apply for new ration card or update existing one.",
+      "requiredDocuments": ["Aadhaar Cards of family", "Address Proof", "Income Certificate", "Family Photo"],
+      "onlinePossibleItems": ["New Application", "Add/Remove Member", "Check Status", "Download E-Ration Card"],
+      "offlineRequiredItems": ["Verification by supply inspector"]
+    },
+    {
+      "id": "widow-pension",
+      "name": "Widow Pension Scheme",
+      "categoryId": "social",
+      "categoryName": "Social Welfare",
+      "description": "Apply for widow pension under state schemes.",
+      "requiredDocuments": ["Death Certificate of husband", "Aadhaar Card", "Bank Account", "Age Proof", "Income Certificate"],
+      "onlinePossibleItems": ["Apply Online", "Track Status", "Check Payment History"],
+      "offlineRequiredItems": ["Verification at block office"]
+    },
+    {
+      "id": "disability-certificate",
+      "name": "Disability Certificate",
+      "categoryId": "social",
+      "categoryName": "Social Welfare",
+      "description": "Apply for disability certificate and UDID.",
+      "requiredDocuments": ["Aadhaar Card", "Medical Reports", "Passport Photos", "ID Proof"],
+      "onlinePossibleItems": ["Apply for UDID", "Track Application", "Download Certificate"],
+      "offlineRequiredItems": ["Medical examination at designated hospital"]
+    },
+    {
+      "id": "old-age-pension",
+      "name": "Old Age Pension",
+      "categoryId": "social",
+      "categoryName": "Social Welfare",
+      "description": "Apply for old age pension under various state schemes.",
+      "requiredDocuments": ["Aadhaar Card", "Age Proof", "Bank Account", "Income Certificate", "BPL Card if applicable"],
+      "onlinePossibleItems": ["Apply Online", "Track Status", "View Payment History", "Update Bank Details"],
+      "offlineRequiredItems": ["Verification at block/district office"]
+    },
+    {
+      "id": "marriage-registration",
+      "name": "Marriage Registration",
+      "categoryId": "legal",
+      "categoryName": "Legal Services",
+      "description": "Register marriage under Special Marriage Act or Hindu Marriage Act.",
+      "requiredDocuments": ["Aadhaar Cards", "Age Proof", "Address Proof", "Photos", "Witness Details"],
+      "onlinePossibleItems": ["Book Appointment", "Submit Application", "Pay Fees", "Download Certificate"],
+      "offlineRequiredItems": ["Appearance before Marriage Officer with witnesses"]
+    },
+    {
+      "id": "legal-aid",
+      "name": "Free Legal Aid",
+      "categoryId": "legal",
+      "categoryName": "Legal Services",
+      "description": "Apply for free legal aid from Legal Services Authority.",
+      "requiredDocuments": ["ID Proof", "Income Certificate", "Case Details"],
+      "onlinePossibleItems": ["Apply Online", "Check Eligibility", "Track Application", "Find Lawyer"],
+      "offlineRequiredItems": ["Interview with legal aid committee"]
+    },
+    {
+      "id": "fir-filing",
+      "name": "Online FIR Filing",
+      "categoryId": "legal",
+      "categoryName": "Legal Services",
+      "description": "File FIR online for certain categories of offences.",
+      "requiredDocuments": ["ID Proof", "Incident Details", "Evidence if any"],
+      "onlinePossibleItems": ["File E-FIR", "Track FIR Status", "Download FIR Copy"],
+      "offlineRequiredItems": ["Physical appearance for serious offences", "Evidence submission"]
+    },
+    {
+      "id": "court-case",
+      "name": "Court Case Status",
+      "categoryId": "legal",
+      "categoryName": "Legal Services",
+      "description": "Check status of court cases across all courts.",
+      "requiredDocuments": ["Case Number", "Court Details"],
+      "onlinePossibleItems": ["Check Case Status", "View Hearing Dates", "Download Orders", "Pay Court Fees"],
+      "offlineRequiredItems": ["Court appearance for hearings"]
+    },
+    {
+      "id": "gst-filing",
+      "name": "GST Return Filing",
+      "categoryId": "business",
+      "categoryName": "Business & Commerce",
+      "description": "File monthly and annual GST returns.",
+      "requiredDocuments": ["GSTIN", "Sales Invoices", "Purchase Records", "Bank Statements"],
+      "onlinePossibleItems": ["File GSTR-1", "File GSTR-3B", "Generate E-Invoice", "View Ledger"],
+      "offlineRequiredItems": []
+    },
+    {
+      "id": "company-registration",
+      "name": "Company Registration",
+      "categoryId": "business",
+      "categoryName": "Business & Commerce",
+      "description": "Register new company with Ministry of Corporate Affairs.",
+      "requiredDocuments": ["Director ID Proofs", "Address Proof", "MOA/AOA", "Digital Signature"],
+      "onlinePossibleItems": ["Name Approval", "Incorporation", "Director KYC", "Annual Filings"],
+      "offlineRequiredItems": []
+    },
+    {
+      "id": "trademark",
+      "name": "Trademark Registration",
+      "categoryId": "business",
+      "categoryName": "Business & Commerce",
+      "description": "Register trademarks for your brand and products.",
+      "requiredDocuments": ["Business Registration", "Logo/Mark", "ID Proof", "Address Proof"],
+      "onlinePossibleItems": ["File Application", "Track Status", "Respond to Objections", "Renewal"],
+      "offlineRequiredItems": ["Hearing for opposed marks"]
+    },
+    {
+      "id": "import-export",
+      "name": "Import Export Code",
+      "categoryId": "business",
+      "categoryName": "Business & Commerce",
+      "description": "Apply for Import Export Code (IEC) for foreign trade.",
+      "requiredDocuments": ["PAN Card", "Bank Account Details", "Business Registration", "Address Proof"],
+      "onlinePossibleItems": ["Apply for IEC", "Modify IEC", "Download Certificate"],
+      "offlineRequiredItems": []
+    },
+    {
+      "id": "epf-pension",
+      "name": "EPF Pension Services",
+      "categoryId": "pension",
+      "categoryName": "Pension & Retirement",
+      "description": "Apply for EPF pension and manage pension account.",
+      "requiredDocuments": ["UAN", "Aadhaar Card", "Bank Account", "Retirement Date Proof"],
+      "onlinePossibleItems": ["Apply for Pension", "Download PPO", "Update Details", "Life Certificate"],
+      "offlineRequiredItems": ["Life certificate submission"]
+    },
+    {
+      "id": "ppo-services",
+      "name": "Pension Payment Order",
+      "categoryId": "pension",
+      "categoryName": "Pension & Retirement",
+      "description": "Access government pension payment order services.",
+      "requiredDocuments": ["PPO Number", "Aadhaar Card", "Bank Account"],
+      "onlinePossibleItems": ["Download PPO", "Check Pension Status", "Update Bank Account", "Arrear Calculation"],
+      "offlineRequiredItems": ["Physical verification for certain changes"]
+    },
+    {
+      "id": "life-certificate",
+      "name": "Digital Life Certificate",
+      "categoryId": "pension",
+      "categoryName": "Pension & Retirement",
+      "description": "Submit digital life certificate for pensioners.",
+      "requiredDocuments": ["PPO Number", "Aadhaar Card with biometrics"],
+      "onlinePossibleItems": ["Submit Life Certificate", "View Status", "Download Receipt"],
+      "offlineRequiredItems": ["Biometric device for submission"]
+    },
+    {
+      "id": "health-insurance",
+      "name": "Government Health Insurance",
+      "categoryId": "insurance",
+      "categoryName": "Insurance",
+      "description": "Apply for government health insurance schemes.",
+      "requiredDocuments": ["Aadhaar Card", "Income Certificate", "Family Details", "Bank Account"],
+      "onlinePossibleItems": ["Check Eligibility", "Apply Online", "Download Card", "Find Hospitals"],
+      "offlineRequiredItems": ["Card printing at CSC"]
+    },
+    {
+      "id": "crop-insurance-claim",
+      "name": "Crop Insurance Claim",
+      "categoryId": "insurance",
+      "categoryName": "Insurance",
+      "description": "File crop insurance claims for crop loss.",
+      "requiredDocuments": ["Insurance Policy", "Crop Loss Evidence", "Land Records", "Bank Account"],
+      "onlinePossibleItems": ["File Claim", "Track Claim", "Upload Documents", "Check Settlement"],
+      "offlineRequiredItems": ["Field assessment by agriculture department"]
+    },
+    {
+      "id": "vehicle-insurance",
+      "name": "Vehicle Insurance Renewal",
+      "categoryId": "insurance",
+      "categoryName": "Insurance",
+      "description": "Renew vehicle insurance online.",
+      "requiredDocuments": ["Vehicle RC", "Previous Policy", "ID Proof"],
+      "onlinePossibleItems": ["Get Quote", "Renew Policy", "Download Policy", "File Claim"],
+      "offlineRequiredItems": ["Vehicle inspection for claims"]
+    },
+    {
+      "id": "pm-jeevan-jyoti",
+      "name": "PM Jeevan Jyoti Bima",
+      "categoryId": "insurance",
+      "categoryName": "Insurance",
+      "description": "Enroll in PM Jeevan Jyoti Bima Yojana life insurance.",
+      "requiredDocuments": ["Aadhaar Card", "Bank Account", "Nominee Details"],
+      "onlinePossibleItems": ["Enroll Online", "Check Coverage", "File Claim", "Download Certificate"],
+      "offlineRequiredItems": []
+    },
+    {
+      "id": "pm-suraksha-bima",
+      "name": "PM Suraksha Bima Yojana",
+      "categoryId": "insurance",
+      "categoryName": "Insurance",
+      "description": "Enroll in PM Suraksha Bima Yojana accident insurance.",
+      "requiredDocuments": ["Aadhaar Card", "Bank Account", "Nominee Details"],
+      "onlinePossibleItems": ["Enroll Online", "Check Coverage", "File Claim", "Download Certificate"],
+      "offlineRequiredItems": []
+    },
+    {
+      "id": "voter-id",
+      "name": "Voter ID Card",
+      "categoryId": "identity",
+      "categoryName": "Identity & Certificates",
+      "description": "Apply for new voter ID or update existing details.",
+      "requiredDocuments": ["Aadhaar Card", "Address Proof", "Age Proof", "Passport Photo"],
+      "onlinePossibleItems": ["New Registration", "Correction", "Transfer", "Download E-EPIC"],
+      "offlineRequiredItems": ["Verification by BLO"]
+    },
+    {
+      "id": "senior-citizen-card",
+      "name": "Senior Citizen ID Card",
+      "categoryId": "identity",
+      "categoryName": "Identity & Certificates",
+      "description": "Apply for senior citizen identity card for various benefits.",
+      "requiredDocuments": ["Aadhaar Card", "Age Proof", "Passport Photo", "Address Proof"],
+      "onlinePossibleItems": ["Apply Online", "Track Status", "Download Card"],
+      "offlineRequiredItems": ["Verification at municipal office"]
+    },
+    {
+      "id": "character-certificate",
+      "name": "Police Character Certificate",
+      "categoryId": "identity",
+      "categoryName": "Identity & Certificates",
+      "description": "Apply for police verification and character certificate.",
+      "requiredDocuments": ["Aadhaar Card", "Address Proof", "Purpose Document", "Passport Photo"],
+      "onlinePossibleItems": ["Apply Online", "Track Status", "Download Certificate"],
+      "offlineRequiredItems": ["Police verification at residence"]
+    },
+    {
+      "id": "arms-license",
+      "name": "Arms License Application",
+      "categoryId": "legal",
+      "categoryName": "Legal Services",
+      "description": "Apply for arms license or renewal.",
+      "requiredDocuments": ["ID Proof", "Address Proof", "Medical Certificate", "Income Proof", "Reason for Application"],
+      "onlinePossibleItems": ["Apply Online", "Track Status", "Apply for Renewal"],
+      "offlineRequiredItems": ["Verification by district authorities", "Background check"]
+    },
+    {
+      "id": "noc-vehicle",
+      "name": "Vehicle NOC",
+      "categoryId": "transport",
+      "categoryName": "Transport & Travel",
+      "description": "Apply for No Objection Certificate for vehicle transfer.",
+      "requiredDocuments": ["Vehicle RC", "Insurance", "PUC", "Address Proof", "Clearance Certificate"],
+      "onlinePossibleItems": ["Apply for NOC", "Track Status", "Download NOC"],
+      "offlineRequiredItems": ["Vehicle inspection at RTO"]
+    },
+    {
+      "id": "duplicate-rc",
+      "name": "Duplicate RC Application",
+      "categoryId": "transport",
+      "categoryName": "Transport & Travel",
+      "description": "Apply for duplicate Registration Certificate if lost or damaged.",
+      "requiredDocuments": ["FIR Copy", "ID Proof", "Address Proof", "Affidavit", "Insurance Copy"],
+      "onlinePossibleItems": ["Apply Online", "Track Status", "Download RC"],
+      "offlineRequiredItems": ["Vehicle verification at RTO"]
+    },
+    {
+      "id": "international-permit",
+      "name": "International Driving Permit",
+      "categoryId": "transport",
+      "categoryName": "Transport & Travel",
+      "description": "Apply for International Driving Permit for driving abroad.",
+      "requiredDocuments": ["Valid Driving License", "Passport", "Passport Photos", "Medical Certificate"],
+      "onlinePossibleItems": ["Apply Online", "Track Status"],
+      "offlineRequiredItems": ["Collection at RTO office"]
+    },
+    {
+      "id": "subsidy-fertilizer",
+      "name": "Fertilizer Subsidy",
+      "categoryId": "agriculture",
+      "categoryName": "Agriculture",
+      "description": "Apply for fertilizer subsidy under government schemes.",
+      "requiredDocuments": ["Farmer ID", "Aadhaar Card", "Land Records", "Bank Account"],
+      "onlinePossibleItems": ["Apply for Subsidy", "Track Status", "View Entitlement"],
+      "offlineRequiredItems": ["Purchase at authorized dealer"]
+    },
+    {
+      "id": "kisan-credit",
+      "name": "Kisan Credit Card",
+      "categoryId": "agriculture",
+      "categoryName": "Agriculture",
+      "description": "Apply for Kisan Credit Card for agricultural financing.",
+      "requiredDocuments": ["Land Records", "ID Proof", "Passport Photos", "Existing Loan Details"],
+      "onlinePossibleItems": ["Apply Online", "Check Status", "View Credit Limit"],
+      "offlineRequiredItems": ["Document verification at bank"]
+    },
+    {
+      "id": "organic-certification",
+      "name": "Organic Farming Certification",
+      "categoryId": "agriculture",
+      "categoryName": "Agriculture",
+      "description": "Apply for organic farming certification.",
+      "requiredDocuments": ["Farmer ID", "Land Records", "Farm Plan", "Input Records"],
+      "onlinePossibleItems": ["Apply Online", "Track Status", "Download Certificate"],
+      "offlineRequiredItems": ["Farm inspection", "Soil testing"]
+    },
+    {
+      "id": "pm-awas",
+      "name": "PM Awas Yojana",
+      "categoryId": "social",
+      "categoryName": "Social Welfare",
+      "description": "Apply for housing assistance under Pradhan Mantri Awas Yojana.",
+      "requiredDocuments": ["Aadhaar Card", "Income Certificate", "Land Document", "Bank Account", "BPL Card"],
+      "onlinePossibleItems": ["Check Eligibility", "Apply Online", "Track Status", "View Installments"],
+      "offlineRequiredItems": ["Field verification", "Construction monitoring"]
+    },
+    {
+      "id": "anganwadi",
+      "name": "Anganwadi Services",
+      "categoryId": "social",
+      "categoryName": "Social Welfare",
+      "description": "Register for Anganwadi services for children and mothers.",
+      "requiredDocuments": ["Aadhaar Card", "Child Birth Certificate", "Address Proof"],
+      "onlinePossibleItems": ["Register Online", "Find Nearest Center", "Check Benefits"],
+      "offlineRequiredItems": ["Center visit for services"]
+    },
+    {
+      "id": "nrega",
+      "name": "MGNREGA Job Card",
+      "categoryId": "employment",
+      "categoryName": "Employment",
+      "description": "Apply for MGNREGA job card for rural employment guarantee.",
+      "requiredDocuments": ["Aadhaar Card", "Family Photo", "Bank Account", "Address Proof"],
+      "onlinePossibleItems": ["Apply for Job Card", "Check Work Days", "View Payments", "Register Complaint"],
+      "offlineRequiredItems": ["Registration at Gram Panchayat"]
+    },
+    {
+      "id": "startup-registration",
+      "name": "Startup India Registration",
+      "categoryId": "business",
+      "categoryName": "Business & Commerce",
+      "description": "Register your startup with Startup India for benefits.",
+      "requiredDocuments": ["Incorporation Certificate", "Brief Description", "Funding Details if any"],
+      "onlinePossibleItems": ["Register Startup", "Apply for Benefits", "Download Certificate"],
+      "offlineRequiredItems": []
+    },
+    {
+      "id": "fssai",
+      "name": "FSSAI License",
+      "categoryId": "business",
+      "categoryName": "Business & Commerce",
+      "description": "Apply for Food Safety and Standards Authority license.",
+      "requiredDocuments": ["ID Proof", "Business Registration", "Food Safety Plan", "Premises Layout"],
+      "onlinePossibleItems": ["Apply for License", "Renewal", "Modify License", "Download Certificate"],
+      "offlineRequiredItems": ["Premises inspection"]
+    },
+    {
+      "id": "shop-license",
+      "name": "Shop and Establishment License",
+      "categoryId": "business",
+      "categoryName": "Business & Commerce",
+      "description": "Register your shop or establishment with local authority.",
+      "requiredDocuments": ["ID Proof", "Address Proof", "Property Documents", "Employee Details"],
+      "onlinePossibleItems": ["Apply Online", "Renewal", "Amendment", "Download License"],
+      "offlineRequiredItems": ["Inspection in some cases"]
+    },
+    {
+      "id": "pollution-certificate",
+      "name": "Pollution Under Control Certificate",
+      "categoryId": "transport",
+      "categoryName": "Transport & Travel",
+      "description": "Get PUC certificate for your vehicle.",
+      "requiredDocuments": ["Vehicle RC", "Previous PUC if any"],
+      "onlinePossibleItems": ["Find PUC Center", "Download Certificate", "Check Validity"],
+      "offlineRequiredItems": ["Vehicle testing at PUC center"]
+    },
+    {
+      "id": "apprenticeship",
+      "name": "National Apprenticeship Portal",
+      "categoryId": "employment",
+      "categoryName": "Employment",
+      "description": "Apply for apprenticeship opportunities across India.",
+      "requiredDocuments": ["Educational Certificates", "Aadhaar Card", "Bank Account"],
+      "onlinePossibleItems": ["Register", "Apply for Apprenticeship", "Track Application", "Download Certificate"],
+      "offlineRequiredItems": ["Training at establishment"]
+    }
+  ]
+}
