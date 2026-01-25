@@ -1,6 +1,6 @@
 const express = require("express");
 const multer = require("multer");
-const { submitApplication, getDocumentByUrl } = require("../controllers/applicationController");
+const { submitApplication, getDocumentByUrl, getAllApplications } = require("../controllers/applicationController");
 
 const router = express.Router();
 const upload = multer({ dest: "uploads/" });
@@ -16,6 +16,7 @@ router.post(
     submitApplication
 );
 
+router.get("/all", getAllApplications);
 router.get("/document-details", getDocumentByUrl);
 
 module.exports = router;

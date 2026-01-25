@@ -56,9 +56,20 @@ export const RequestsProvider: React.FC<{ children: ReactNode }> = ({ children }
 
       // ... (fetching logic)
 
-      // Loop through all requests on blockchain
-      for (let i = 1; i <= total; i++) {
-        const data = await getServiceRequest(i);
+      // Fetch all requests in parallel for better performance
+      const requestIds = Array.from({ length: total }, (_, i) => i + 1);
+      const allResults = await Promise.all(
+        requestIds.map(async (id) => {
+          try {
+            return await getServiceRequest(id);
+          } catch (e) {
+            console.error(`Failed to fetch request ${id}:`, e);
+            return null;
+          }
+        })
+      );
+
+      allResults.forEach((data) => {
         if (data) {
           const isCallRequest = data.serviceCategory.startsWith('CALL:');
           const cleanCategory = isCallRequest ? data.serviceCategory.replace('CALL:', '') : data.serviceCategory;
@@ -68,7 +79,7 @@ export const RequestsProvider: React.FC<{ children: ReactNode }> = ({ children }
               0: 'pending',
               1: 'contacted',
               2: 'completed',
-              3: 'pending' // Mapping rejected call to pending for simplicity
+              3: 'pending'
             };
 
             blockchainCallRequests.push({
@@ -78,7 +89,7 @@ export const RequestsProvider: React.FC<{ children: ReactNode }> = ({ children }
               serviceName: data.serviceName,
               categoryName: cleanCategory,
               selectedItem: data.serviceName,
-              formFields: { fullName: 'Unknown (Blockchain Sync)', phone: '', preferredTime: 'Anytime' },
+              formFields: { fullName: 'Linked (Blockchain)', phone: '', preferredTime: 'Anytime' },
               status: statusMap[data.status] || 'pending',
               createdAt: new Date(Number(data.createdAt) * 1000),
               updatedAt: new Date(Number(data.updatedAt) * 1000),
@@ -99,7 +110,7 @@ export const RequestsProvider: React.FC<{ children: ReactNode }> = ({ children }
               serviceName: data.serviceName,
               categoryName: cleanCategory,
               uploadedFiles: [],
-              formFields: { fullName: 'Unknown (Blockchain Sync)', phone: '', address: '' },
+              formFields: { fullName: 'Linked (Blockchain)', phone: '', address: '' },
               status: statusMap[data.status] || 'pending',
               createdAt: new Date(Number(data.createdAt) * 1000),
               updatedAt: new Date(Number(data.updatedAt) * 1000),
@@ -108,6 +119,50 @@ export const RequestsProvider: React.FC<{ children: ReactNode }> = ({ children }
               selectedItem: data.serviceName
             });
           }
+        }
+      });
+
+      // ENRICH WITH MONGODB METADATA FOR ADMIN/OWNER
+      if (role === 'admin' || role === 'owner') {
+        try {
+          const API_BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
+          const metaResponse = await fetch(`${API_BASE_URL}/api/application/all`);
+          if (metaResponse.ok) {
+            const metaData = await metaResponse.json();
+            const applications = metaData.applications || [];
+
+            // Build a multi-key map: wallet_service -> meta
+            const metaMap = new Map();
+            applications.forEach((app: any) => {
+              const key = `${app.walletAddress.toLowerCase()}_${app.serviceType.toLowerCase()}`;
+              if (!metaMap.has(key)) metaMap.set(key, []);
+              metaMap.get(key).push(app);
+            });
+
+            // Update blockchainRequests with metadata
+            blockchainRequests.forEach(req => {
+              const key = `${req.walletAddress.toLowerCase()}_${req.serviceName.toLowerCase()}`;
+              const matches = metaMap.get(key);
+              if (matches && matches.length > 0) {
+                // Find most suitable match (best effort)
+                const match = matches[0];
+                req.formFields = {
+                  fullName: match.applicantName || 'Linked (Verified)',
+                  phone: match.data?.phone || 'Provided',
+                  address: match.data?.address || 'Provided'
+                };
+                req.uploadedFiles = match.documents?.map((d: any) => ({
+                  id: d._id,
+                  name: d.documentType,
+                  url: d.url,
+                  type: 'application/pdf',
+                  status: 'uploaded'
+                })) || [];
+              }
+            });
+          }
+        } catch (enrichError) {
+          console.error("Metadata enrichment failed:", enrichError);
         }
       }
 

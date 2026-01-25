@@ -124,3 +124,14 @@ exports.getDocumentByUrl = async (req, res) => {
         res.status(500).json({ success: false, message: "Internal server error", error: error.message });
     }
 };
+
+exports.getAllApplications = async (req, res) => {
+    try {
+        console.log("Fetching all applications metadata...");
+        const applications = await Application.find().sort({ createdAt: -1 });
+        return res.status(200).json({ success: true, applications });
+    } catch (error) {
+        console.error("Error fetching all applications:", error);
+        res.status(500).json({ success: false, message: "Failed to fetch applications", error: error.message });
+    }
+};
