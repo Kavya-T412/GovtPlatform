@@ -45,13 +45,15 @@ export const RequestsProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   // Sync blockchain requests
   const fetchBlockchainRequests = useCallback(async () => {
-    if (!isConnected || !isCorrectNetwork) return;
+    if (!isConnected || !isCorrectNetwork || !walletAddress) return;
 
     setIsSyncing(true);
     try {
       const total = await useContract().getTotalRequests();
       const blockchainRequests: ServiceRequest[] = [];
       const blockchainCallRequests: CallRequest[] = [];
+
+      // ... (fetching logic)
 
       // Loop through all requests on blockchain
       for (let i = 1; i <= total; i++) {
@@ -153,7 +155,7 @@ export const RequestsProvider: React.FC<{ children: ReactNode }> = ({ children }
     } finally {
       setIsSyncing(false);
     }
-  }, [isConnected, isCorrectNetwork]);
+  }, [isConnected, isCorrectNetwork, walletAddress]);
 
   const refreshRequests = useCallback(async () => {
     await fetchBlockchainRequests();
@@ -161,10 +163,18 @@ export const RequestsProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   // Initial sync when wallet/network/contract is ready
   useEffect(() => {
-    if (isConnected && isCorrectNetwork) {
+    if (isConnected && isCorrectNetwork && walletAddress) {
       fetchBlockchainRequests();
     }
-  }, [isConnected, isCorrectNetwork, fetchBlockchainRequests]);
+  }, [isConnected, isCorrectNetwork, walletAddress, fetchBlockchainRequests]);
+
+  // Clear state when wallet disconnects or changes to ensure session isolation
+  useEffect(() => {
+    if (!isConnected || !walletAddress) {
+      setRequests([]);
+      setCallRequests([]);
+    }
+  }, [isConnected, walletAddress]);
 
   const addRequest = useCallback(async (request: Omit<ServiceRequest, 'id' | 'createdAt' | 'updatedAt' | 'status'>) => {
     const id = 'REQ' + Date.now().toString().slice(-6);
